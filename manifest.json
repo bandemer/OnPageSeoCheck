@@ -1,0 +1,30 @@
+{
+
+  "manifest_version": 2,
+  "name": "OnPageSeoCheck",
+  "version": "0.1",
+
+  "description": "Checks for common on page seo errors.",
+
+  "icons": {
+    "32": "icons/OnPageSeoCheck-32.png",
+    "48": "icons/OnPageSeoCheck-48.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["seocheck.js"]
+    }
+  ],
+
+  "browser_action": {
+    "default_icon": "icons/OnPageSeoCheck-32.png",
+    "theme_icons": [{
+      "light": "icons/OnPageSeoCheck-32.png",
+      "dark": "icons/OnPageSeoCheck-32.png",
+      "size": 32
+    }],
+    "default_title": "OnPageSeoCheck"
+  }
+}

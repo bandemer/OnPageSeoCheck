@@ -14,9 +14,14 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["seocheck.js"]
+      "js": ["content-script.js"]
     }
   ],
+
+  "background": {
+    "scripts": ["background-script.js"],
+    "persistent": false
+  },
 
   "browser_action": {
     "default_icon": "icons/OnPageSeoCheck-32.png",

@@ -45,8 +45,11 @@ for (let i = 0; i < keys.length; i++) {
     }
 }
 
-if (!errorFound) {
-    console.log('OnPageSeoCheck: Everything is fine!');
+var message = { type: 'info', text: 'Everything is fine!' };
+if (errorFound) {
+    message.type = 'error';
+    message.text = 'OnPageSeoCheck: Errors found';
 }
+browser.runtime.sendMessage(message);
 
 

@@ -7,8 +7,8 @@
   "description": "Checks for common on page seo errors.",
 
   "icons": {
-    "32": "icons/OnPageSeoCheck-32.png",
-    "48": "icons/OnPageSeoCheck-48.png"
+    "32": "icons/seo-32.png",
+    "48": "icons/seo-48.png"
   },
 
   "content_scripts": [

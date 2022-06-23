@@ -9,8 +9,8 @@ function notify(message) {
         let settingIcon = browser.browserAction.setIcon(
             {
                 path: {
-                    32: "icons/error-32.png",
-                    48: "icons/error-48.png"
+                    32: "icons/seo-32-rot.png",
+                    48: "icons/seo-48-rot.png"
                 }
             }
         );
@@ -18,8 +18,8 @@ function notify(message) {
         let settingIcon = browser.browserAction.setIcon(
             {
                 path: {
-                    32: "icons/OnPageSeoCheck-32.png",
-                    48: "icons/OnPageSeoCheck-48.png"
+                    32: "icons/seo-32-gruen.png",
+                    48: "icons/seo-48-gruen.png"
                 }
             }
         );

@@ -24,10 +24,10 @@
   },
 
   "browser_action": {
-    "default_icon": "icons/OnPageSeoCheck-32.png",
+    "default_icon": "icons/seo-32.png",
     "theme_icons": [{
-      "light": "icons/OnPageSeoCheck-32.png",
-      "dark": "icons/OnPageSeoCheck-32.png",
+      "light": "icons/seo-32.png",
+      "dark": "icons/seo-32.png",
       "size": 32
     }],
     "default_title": "OnPageSeoCheck"

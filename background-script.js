@@ -6,7 +6,7 @@ function notify(message) {
     console.log(message.text);
 
     if (message.type == 'error') {
-        let settingIcon = browser.browserAction.setIcon(
+        browser.browserAction.setIcon(
             {
                 path: {
                     32: "icons/seo-32-rot.png",
@@ -14,8 +14,17 @@ function notify(message) {
                 }
             }
         );
+    } else if (message.type == 'warning') {
+        browser.browserAction.setIcon(
+            {
+                path: {
+                    32: "icons/seo-32-gelb.png",
+                    48: "icons/seo-48-gelb.png"
+                }
+            }
+        );
     } else {
-        let settingIcon = browser.browserAction.setIcon(
+        browser.browserAction.setIcon(
             {
                 path: {
                     32: "icons/seo-32-gruen.png",
@@ -24,5 +33,4 @@ function notify(message) {
             }
         );
     }
-
 }

@@ -2,54 +2,208 @@
  * OnPageSeoCheck
  *
  */
-let errorFound = false;
 
-const keys = ['title', 'desc', 'robots', 'canonical'];
+let level = 0;
+let messages = [];
+let check = [];
 
-let checks = [];
-checks['title']     = '';
-checks['desc']      = '';
-checks['robots']    = '';
-checks['canonical'] = '';
+/**
+ * Check MetaTitle, MetaDesc, Robots and Canonical URL
+ */
+let metaTitle = [];
+let metaDesc = [];
+let robots = [];
+let canonical = [];
 
-const messages = [];
-messages['title']     = 'Document title empty or not set.';
-messages['desc']      = 'Meta description empty or not set.';
-messages['robots']    = 'Meta robots tag empty or not set.';
-messages['canonical'] = 'Canonical url empty or not set-';
+/**
+ * Check MetaTitle
+ */
+metaTitle = document.getElementsByTagName('title');
+check = checkMetaTitle(metaTitle);
+if (check.level > 0) {
+    messages = messages.concat(check.messages)
+    if (level < check.level) {
+        level = check.level;
+    }
+}
 
-checks['title'] = document.title;
-
+/**
+ * Collect meta data
+ */
 const metas = document.getElementsByTagName('meta');
 for (let i = 0; i < metas.length; i++) {
     if (metas[i].getAttribute('name') === 'description') {
-        checks['desc'] = metas[i].getAttribute('content');
+        metaDesc.push(metas[i].getAttribute('content'));
     } else if (metas[i].getAttribute('name') === 'robots') {
-        checks['robots'] = metas[i].getAttribute('content');
+        robots.push(metas[i].getAttribute('content'));
     }
 }
 
+/**
+ * Check Meta Description
+ */
+check = checkMetaDescription(metaDesc);
+if (check.level > 0) {
+    messages = messages.concat(check.messages)
+    if (level < check.level) {
+        level = check.level;
+    }
+}
+
+/**
+ * Check Meta Robots
+  */
+check = checkRobotsTag(robots);
+if (check.level > 0) {
+    messages = messages.concat(check.messages)
+    if (level < check.level) {
+        level = check.level;
+    }
+}
+
+/**
+ * Check canonical url
+ */
 const links = document.getElementsByTagName('link');
 for (let i = 0; i < links.length; i++) {
     if (links[i].getAttribute('rel') === 'canonical') {
-        checks['canonical'] = links[i].getAttribute('href');
+        canonical.push(links[i].getAttribute('href'));
+    }
+}
+check = checkCanonicalUrl(canonical);
+if (check.level > 0) {
+    messages = messages.concat(check.messages)
+    if (level < check.level) {
+        level = check.level;
     }
 }
 
-for (let i = 0; i < keys.length; i++) {
-    if (checks[keys[i]] == '') {
-        errorFound = true;
-        console.log('OnPageSeoCheck: ' + messages[keys[i]]);
-    } else {
-        console.log('OnPageSeoCheck: ' + checks[keys[i]]);
-    }
-}
-
-var message = { type: 'info', text: 'Everything is fine!' };
-if (errorFound) {
+/**
+ * Send info to background script
+ */
+var message = { type: 'info', text: 'OnPageSeoCheck: Everything is fine!' };
+if (level == 100) {
     message.type = 'error';
     message.text = 'OnPageSeoCheck: Errors found';
+} else if (level == 50) {
+    message.type = 'warning';
+    message.text = 'OnPageSeoCheck: Warnings found';
+}
+for (let i = 0; i < messages.length; i++) {
+    console.log('OnPageSeoCheck: ' + messages[i]);
 }
 browser.runtime.sendMessage(message);
 
 
+/**
+ * Check Meta Title
+ */
+function checkMetaTitle(found)
+{
+    let rA = { 'level': 0, 'messages': []};
+
+    if (found.length == 0) {
+        rA.level = 100;
+        rA.messages.push('No Meta Title found');
+    } else if (found.length > 1) {
+        rA.level = 100;
+        rA.messages.push('More than one Meta Title found');
+    } else {
+        if (found[0].innerHTML.length == 0) {
+            rA.level = 100;
+            rA.messages.push('Meta Title is empty');
+        } else if (found[0].innerHTML.length < 10 ) {
+            rA.level = 50;
+            rA.messages.push('Meta Title is very short');
+        } else if (found[0].innerHTML.length > 100 ) {
+            rA.level = 50;
+            rA.messages.push('Meta Title is very long');
+        }
+    }
+    return rA;
+}
+
+/**
+ * Check Meta Description
+ */
+function checkMetaDescription(found)
+{
+    let rA = { 'level': 0, 'messages': []};
+
+    if (found.length == 0) {
+        rA.level = 100;
+        rA.messages.push('No meta description found');
+    } else if (found.length > 1) {
+        rA.level = 100;
+        rA.messages.push('More than one meta description found');
+    } else {
+        if (found[0].length == 0) {
+            rA.level = 100;
+            rA.messages.push('Meta description is empty');
+        } else if (found[0].length < 50 ) {
+            rA.level = 50;
+            rA.messages.push('Meta description is very short');
+        } else if (found[0].length > 250 ) {
+            rA.level = 50;
+            rA.messages.push('Meta description is very long');
+        }
+    }
+    return rA;
+}
+
+/**
+ * Check Robots tag
+ */
+function checkRobotsTag(found)
+{
+    let rA = { 'level': 0, 'messages': []};
+
+    if (found.length == 0) {
+        rA.level = 50;
+        rA.messages.push('No meta robots tag found');
+    } else if (found.length > 1) {
+        rA.level = 100;
+        rA.messages.push('More than one meta robots tag found');
+    } else {
+
+        if (found[0].length == 0) {
+            rA.level = 100;
+            rA.messages.push('Meta robots is empty');
+        } else if (found[0].trim().toLowerCase() == 'index,follow' ||
+            found[0].trim().toLowerCase() == 'noindex,follow' ||
+            found[0].trim().toLowerCase() == 'index,nofollow' ||
+            found[0].trim().toLowerCase() == 'noindex,nofollow') {
+            /**
+             * valid values
+             * maybe use a regex instead
+             */
+        } else {
+            rA.level = 100;
+            rA.messages.push('No valid value for meta robots: ' +
+                found[0].trim().toLowerCase());
+        }
+    }
+    return rA;
+}
+
+/**
+ * Check canonical url
+ */
+function checkCanonicalUrl(found)
+{
+    let rA = { 'level': 0, 'messages': []};
+
+    if (found.length == 0) {
+        rA.level = 100;
+        rA.messages.push('No canonical url is set');
+    } else if (found.length > 1) {
+        rA.level = 100;
+        rA.messages.push('More than one canonical url found');
+    } else {
+        if (found[0].length == 0) {
+            rA.level = 100;
+            rA.messages.push('Canonical url is empty');
+        }
+    }
+    return rA;
+}

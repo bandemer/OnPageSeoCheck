@@ -9,8 +9,10 @@ function notify(message) {
         browser.browserAction.setIcon(
             {
                 path: {
-                    32: "icons/seo-32-rot.png",
-                    48: "icons/seo-48-rot.png"
+                    32: "icons/onpageseocheck-rot-32.png",
+                    48: "icons/onpageseocheck-rot-48.png",
+                    96: "icons/onpageseocheck-rot-96.png",
+                    128: "icons/onpageseocheck-rot-128.png"
                 }
             }
         );
@@ -18,8 +20,10 @@ function notify(message) {
         browser.browserAction.setIcon(
             {
                 path: {
-                    32: "icons/seo-32-gelb.png",
-                    48: "icons/seo-48-gelb.png"
+                    32: "icons/onpageseocheck-gelb-32.png",
+                    48: "icons/onpageseocheck-gelb-48.png",
+                    96: "icons/onpageseocheck-gelb-96.png",
+                    128: "icons/onpageseocheck-gelb-128.png"
                 }
             }
         );
@@ -27,8 +31,10 @@ function notify(message) {
         browser.browserAction.setIcon(
             {
                 path: {
-                    32: "icons/seo-32-gruen.png",
-                    48: "icons/seo-48-gruen.png"
+                    32: "icons/onpageseocheck-32.png",
+                    48: "icons/onpageseocheck-48.png",
+                    96: "icons/onpageseocheck-96.png",
+                    128: "icons/onpageseocheck-128.png"
                 }
             }
         );

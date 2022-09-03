@@ -1,11 +1,14 @@
 {
   "manifest_version": 2,
   "name": "OnPageSeoCheck",
-  "version": "0.2",
-  "description": "Checks for common on page seo errors.",
+  "version": "1.0",
+  "description": "Checks websites for common onpage seo errors.",
   "icons": {
-    "32": "icons/seo-32.png",
-    "48": "icons/seo-48.png"
+    "16": "icons/onpageseocheck-16.png",
+    "32": "icons/onpageseocheck-32.png",
+    "48": "icons/onpageseocheck-48.png",
+    "96": "icons/onpageseocheck-96.png",
+    "128": "icons/onpageseocheck-128.png"
   },
   "content_scripts": [
     {
@@ -19,10 +22,10 @@
     "service_worker": false
   },
   "browser_action": {
-    "default_icon": "icons/seo-32.png",
+    "default_icon": "icons/onpageseocheck-32.png",
     "theme_icons": [{
-      "light": "icons/seo-32.png",
-      "dark": "icons/seo-32.png",
+      "light": "icons/onpageseocheck-32.png",
+      "dark": "icons/onpageseocheck-32.png",
       "size": 32
     }],
     "default_title": "OnPageSeoCheck"

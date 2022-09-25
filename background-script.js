@@ -1,9 +1,10 @@
 
+
 browser.runtime.onMessage.addListener(notify);
 
 function notify(message) {
 
-    console.log(message.text);
+    //console.log('OnPageSeoCheck: ' + message.text);
 
     if (message.type == 'error') {
         browser.browserAction.setIcon(
@@ -40,3 +41,4 @@ function notify(message) {
         );
     }
 }
+

@@ -81,16 +81,18 @@ if (check.level > 0) {
 /**
  * Send info to background script
  */
-var message = { type: 'info', text: 'OnPageSeoCheck: Everything is fine!' };
+var message = { type: 'info', text: 'Everything is fine!', content: {}};
 if (level == 100) {
     message.type = 'error';
-    message.text = 'OnPageSeoCheck: Errors found';
+    message.text = 'Errors found';
+    message.content = messages;
 } else if (level == 50) {
     message.type = 'warning';
-    message.text = 'OnPageSeoCheck: Warnings found';
+    message.text = 'Warnings found';
+    message.content = messages;
 }
 for (let i = 0; i < messages.length; i++) {
-    console.log('OnPageSeoCheck: ' + messages[i]);
+    //console.log('OnPageSeoCheck: ' + messages[i]);
 }
 browser.runtime.sendMessage(message);
 

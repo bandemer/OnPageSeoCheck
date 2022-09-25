@@ -29,5 +29,11 @@
       "size": 32
     }],
     "default_title": "OnPageSeoCheck"
+  },
+  "sidebar_action": {
+    "default_title": "OnPageSeoCheck",
+    "default_panel": "sidebar/sidebar.html",
+    "default_icon": "icons/onpageseocheck-48.png"
   }
+
 }

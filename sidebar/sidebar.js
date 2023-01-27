@@ -8,16 +8,18 @@ document.getElementById('opsc_clear_log').addEventListener("click", function () 
 browser.runtime.onMessage.addListener(notify);
 
 function notify(message) {
-
-    document.getElementById('opsc_log').value += message.text;
+    var ta = document.getElementById('opsc_log');
+    ta.value += message.text;
 
     if (message.type == 'error' || message.type == 'warning') {
-        document.getElementById('opsc_log').value += ":\n";
+        ta.value += ":\n";
         for (let i = 0; i < message.content.length; i++) {
-            document.getElementById('opsc_log').value += message.content[i]+"\n";
+            ta.value += message.content[i]+"\n";
         }
     } else {
-        document.getElementById('opsc_log').value += "\n";
+        ta.value += "\n";
     }
+
+    ta.scrollTop = ta.scrollHeight;;
 }
 

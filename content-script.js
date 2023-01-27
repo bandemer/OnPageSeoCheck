@@ -2,7 +2,6 @@
  * OnPageSeoCheck
  *
  */
-
 let level = 0;
 let messages = [];
 let check = [];
@@ -81,7 +80,10 @@ if (check.level > 0) {
 /**
  * Send info to background script
  */
-var message = { type: 'info', text: 'Everything is fine!', content: {}};
+var message = { type: 'info', text: '\nAnalyzing URL: ' + document.URL, content: {}};
+browser.runtime.sendMessage(message);
+
+message = { type: 'info', text: 'Everything is fine!', content: {}};
 if (level == 100) {
     message.type = 'error';
     message.text = 'Errors found';
@@ -90,9 +92,6 @@ if (level == 100) {
     message.type = 'warning';
     message.text = 'Warnings found';
     message.content = messages;
-}
-for (let i = 0; i < messages.length; i++) {
-    //console.log('OnPageSeoCheck: ' + messages[i]);
 }
 browser.runtime.sendMessage(message);
 

@@ -4,22 +4,20 @@ document.getElementById('opsc_clear_log').addEventListener("click", function () 
     document.getElementById("opsc_log").value = '';
 });
 
-//Show Errors or Warnings in Log
+//Listen to runtime messages
 browser.runtime.onMessage.addListener(notify);
 
+//On load request log messages from background script
+browser.windows.getCurrent({populate: true}).then(() => {
+    let requestlogmessage = { sendlog: true};
+    browser.runtime.sendMessage(requestlogmessage);
+});
+
 function notify(message) {
-    var ta = document.getElementById('opsc_log');
-    ta.value += message.text;
 
-    if (message.type == 'error' || message.type == 'warning') {
-        ta.value += ":\n";
-        for (let i = 0; i < message.content.length; i++) {
-            ta.value += message.content[i]+"\n";
-        }
-    } else {
-        ta.value += "\n";
+    if (message.updatelogview === true) {
+        let ta = document.getElementById('opsc_log');
+        ta.value = message.content.join("\n").trim();
+        ta.scrollTop = ta.scrollHeight;
     }
-
-    ta.scrollTop = ta.scrollHeight;;
 }
-

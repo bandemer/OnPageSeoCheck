@@ -1,8 +1,30 @@
+//Log Messages
+let log = [];
+
 browser.runtime.onMessage.addListener(notify);
 
-function notify(message) {
+browser.browserAction.onClicked.addListener(() =>
+    {
+        browser.sidebarAction.toggle();
+    }
+);
 
-    //console.log('OnPageSeoCheck: ' + message.text);
+function notify(message, sender, sendResponse) {
+
+    if (message.text !== undefined) {
+        log.push(message.text);
+    }
+
+    if (message.type == 'error' || message.type == 'warning') {
+        for (let i = 0; i < message.content.length; i++) {
+            log.push(message.content[i]);
+        }
+    }
+
+    if (message.sendlog === true) {
+        let logmessage = { updatelogview: true, content: log};
+        browser.runtime.sendMessage(logmessage);
+    }
 
     if (message.type == 'error') {
         browser.browserAction.setIcon(

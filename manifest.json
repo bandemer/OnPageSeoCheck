@@ -31,6 +31,7 @@
     "default_title": "OnPageSeoCheck"
   },
   "sidebar_action": {
+    "browser_style": true,
     "default_title": "OnPageSeoCheck",
     "default_panel": "sidebar/sidebar.html",
     "default_icon": "icons/onpageseocheck-48.png"

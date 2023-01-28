@@ -83,14 +83,14 @@ if (check.level > 0) {
 var message = { type: 'info', text: '\nAnalyzing URL: ' + document.URL, content: {}};
 browser.runtime.sendMessage(message);
 
-message = { type: 'info', text: 'Everything is fine!', content: {}};
+message = { sendlog: true, type: 'info', text: 'Everything is fine!', content: {}};
 if (level == 100) {
     message.type = 'error';
-    message.text = 'Errors found';
+    message.text = 'Errors found:';
     message.content = messages;
 } else if (level == 50) {
     message.type = 'warning';
-    message.text = 'Warnings found';
+    message.text = 'Warnings found:';
     message.content = messages;
 }
 browser.runtime.sendMessage(message);
